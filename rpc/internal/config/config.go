@@ -1,13 +1,14 @@
 package config
 
 import (
-	"github.com/zeromicro/go-zero/zrpc"
+	"github.com/zeromicro/go-zero/rest"
 )
 
 // Config ... struct to load configurations store in etc folder
 // you can append more fields that you need.
 type Config struct {
-	zrpc.RpcServerConf
+	rest.RestConf
+	//zrpc.RpcServerConf
 
 	DB struct { // database config
 		DataSource     string `json:"datasource"`

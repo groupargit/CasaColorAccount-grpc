@@ -17,3 +17,4 @@ func NewServiceContext(c config.Config, db model.AccountModel) *ServiceContext {
 		DB:     db,
 	}
 }
+

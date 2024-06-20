@@ -1,5 +1,7 @@
-Name: account.rpc
-ListenOn: :8080
+Name: account
+Host: 0.0.0.0
+Port: 8088
+# ListenOn: :8888
 # Etcd:
 #   Hosts:
 #   - 127.0.0.1:2379
