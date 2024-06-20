@@ -1,0 +1,521 @@
+syntax = "proto3";
+ 
+package account.v1alpha1;
+option go_package = "account/v1alpha1";
+ 
+// The account service definition.
+message User {
+   string user_id = 1;
+   string name = 2;
+   string email = 3;
+   string token = 4;
+   string created_at = 5;
+   string updated_at = 6;
+   bool status = 7;
+   bool is_suspended = 8;
+}
+
+service AccountAPIService{ 
+  rpc Login(AccountLoginRequest) returns (AccountLoginResponse) {}
+}
+ 
+message AccountLoginRequest {
+   string email = 1;
+   string password = 2;
+   string token = 3;
+ }
+
+message AccountLoginResponse {
+   User user = 1;
+   string error = 2;
+}
+//  message Project {
+//    string project_id = 1;
+//    string name = 2;
+//    string image = 3;
+//    Budget budget = 4;
+//    string card_id = 5;
+//    string description = 6;
+//    string created_at = 7;
+//    string updated_at = 8;
+//    Subscription subscription = 9;
+//    bool status = 10;
+//    bool is_suspended = 11;
+//  }
+ 
+//  message Subscription {
+//    string subscription_id =1;
+//    string subscription_item_id =2;
+//    string invoice_id = 3;
+//    string price_cpu =4;
+//    string price_bytes =5;
+//    string price_pipeline =6;
+//    string currency =7;
+//    string interval =8;   
+//  }
+ 
+//  message Payment {
+//    string card_id =1;
+//    bool default = 2;
+//    bool enabled = 3;
+//    string alias = 4;
+//    string token_card = 5;
+//    Card card = 6;
+//  }
+ 
+//  message Card {
+//    string id = 1;
+//    string number = 2;
+//    string card_holder_name = 3;
+//    string expmonth = 4;
+//    string expyear = 5;
+//    string cvc = 6;
+//    string brand = 7;  
+//  }
+ 
+//  message Invoice {
+//    string id =1;
+//    int64 amount = 2;
+//    string period = 3;
+//    string statuspay = 4;
+//    string date = 5;
+//    string product = 6;
+//  }
+ 
+//  message Biling {
+//    string id =1;
+//    string invoice_id =2;
+//    string account_name = 3;  
+//    int64 totalusage = 4;
+//    double cpu = 5;
+//    double ram = 6;
+//    double pipeline = 7;
+//    string month = 8;
+//    string year = 9;
+//    int64 amount = 10;
+//    string period = 11;
+//    string statuspay = 12;
+//    string date = 13;
+//    string product = 14;
+//  }
+ 
+//  message SubscriptionItems {
+//    string id =1;
+//    string subscription_item_id =2;
+//    string price_id = 3;  
+//    string  product_id = 4;
+  
+//  }
+ 
+//  message SubscriptionItemsList {
+//    repeated SubscriptionItems items = 1;
+//  } 
+ 
+ 
+//  message InvoiceList {
+//    repeated Invoice items = 1;
+//  } 
+ 
+//  message CustomerList {
+//    repeated Customer items = 1;
+//  } 
+ 
+//  message BilingList{
+//    repeated Biling items = 1;
+//  } 
+ 
+//  message SubscriptionList {
+//    repeated Subscription items = 1;
+//  } 
+ 
+//  message CardList {
+//    repeated Card items = 1;
+//  } 
+ 
+//  message PaymentList {
+//    repeated Payment items = 1;
+//  } 
+ 
+//  message ProjectList {
+//    repeated Project items = 1;
+//  } 
+ 
+//  message ProjectBilling {
+//    string id =1;
+//    string project_id = 2;
+//    string project_name = 3;
+//    string plan = 4;
+//    string ram = 5;
+//    string cpu = 6;
+//    string pipeline = 7;
+//  }
+ 
+//  message ProjectBillingList {
+//    repeated ProjectBilling items = 1;
+//  }
+ 
+ 
+//  message BlockChain {
+//    string blockchain_id = 1;
+//    string blockchain_name = 2;
+//    string blockchain_type = 3;
+//    string project_id = 4;
+//    Subscription subscription = 5;
+//    string created_at = 6;
+//    string updated_at = 7;
+//    bool status = 8;
+//    bool is_suspended = 9;
+//  }
+ 
+//  message Budget {
+//    string plan = 1;
+//    string budget_time = 2;
+//    string budget_amount = 3;
+//  }
+ 
+// // The payment service definition.
+// service PaymentAPIService{ 
+//    //Create a new service 
+//    rpc CreateCustomer(CreateCustomerRequest) returns (CreateCustomerResponse) {}
+//    rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse) {}; 
+//    rpc CreatePayment(CreatePaymentRequest) returns (CreatePaymentResponse) {};
+//    rpc CreateCard(CreateCardRequest) returns (CreateCardResponse) {};
+//    rpc CreateInvoice(CreateInvoiceRequest) returns (CreateInvoiceResponse) {}; 
+
+//    //Get the service
+//    rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse) {}; 
+//    rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse) {}; 
+//    rpc GetPayment(GetPaymentRequest) returns (GetPaymentResponse) {};
+//    rpc GetCustomer(GetCustomerRequest) returns (GetCustomerResponse) {};
+//    rpc GetBilingMonth(GetBilingMonthRequest) returns (GetBilingMonthResponse) {};
+//    rpc Getaccount(GetaccountRequest) returns (GetaccountResponse) {};
+
+//    //List the service
+//    rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {}; 
+//    rpc ListPayment(ListPaymentRequest) returns (ListPaymentResponse) {};  
+//    rpc ListSubscriptionItems(ListSubscriptionItemsRequest) returns (ListSubscriptionItemsResponse) {}; 
+//    rpc ListCustomers(ListCustomersRequest) returns (ListCustomersResponse) {}; 
+  
+//    //Update service
+//    rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse) {};
+//    rpc SetDefaultPaymentMethod(SetDefaultPaymentMethodRequest) returns (SetDefaultPaymentMethodResponse) {};
+ 
+//    //Delete service
+//    rpc DeleteProject(DeleteProjectRequest) returns (DeleteProjectResponse) {};
+//    rpc DeletePayment(DeletePaymentRequest) returns (DeletePaymentResponse) {};
+//    rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse) {}; 
+//    rpc DeleteCustomer(DeleteCustomerRequest) returns (DeleteCustomerResponse) {}
+
+//    //Filter service
+//    rpc InvoiceFilter(InvoiceFilterRequest) returns (InvoiceFilterResponse) {};
+//    rpc ConsumeByProject(ConsumeByProjectRequest) returns (ConsumeByProjectResponse) {};
+
+//    //Projects
+//    rpc CreateProject(CreateProjectRequest) returns (CreateProjectResponse) {};
+//    rpc UpdateProject(UpdateProjectRequest) returns (UpdateProjectResponse) {};
+//    rpc StopProject(StopProjectRequest) returns (StopProjectResponse){};
+
+//    //BlockChain Subscription
+//    rpc BlockChainSubscription(BlockChainSubscriptionRequest) returns (BlockChainSubscriptionResponse){};
+// }
+
+// message StopProjectRequest{
+//    string organization_id = 1;
+//    string project_id = 2;
+// }
+
+// message StopProjectResponse{
+//    string status = 1;
+// }
+     
+// message InvoiceFilterRequest {
+//    string invoice_id = 2;
+//    string year = 3;
+//    string month = 4;
+//    string customer_id = 5;
+//    string project_id = 6;
+//    double cpu = 7;
+//    double ram = 8;
+//    double pipeline = 9;
+//    CustomerList customer_list = 10;               
+//    string  organization_id = 1;
+// }
+   
+// message InvoiceFilterResponse {
+//    Customer customer = 1;
+//    BilingList biling_list = 2;
+//    string status = 3;
+// }
+
+// message DeleteCustomerRequest {
+//    string organization_id = 1;
+//    string customer_id = 2;
+// }
+
+// message DeleteCustomerResponse {
+//    string status = 1;  
+//    string error = 2;
+// }
+
+// message GetSubscriptionRequest {
+//    string organization_id = 1;
+//    string subscription_id = 2;
+// }
+
+// message GetSubscriptionResponse {
+//    Subscription subscription = 1;
+//    string error = 2;
+// }
+// message GetOrganizationRequest {
+//    string organization_id = 1;
+// }
+
+// message GetOrganizationResponse {
+//    Customer customer = 1;
+//    string error = 2;
+// }
+
+// message GetCustomerRequest {
+//    string organization_id = 1;
+//    string customer_id = 2;
+// }  
+
+// message GetCustomerResponse {
+//    Customer customer = 1;
+//    string error = 2;
+// }
+
+// message GetBilingMonthRequest {
+//    string organization_id = 1;
+//    string invoice_id = 2;
+// }
+
+// message GetBilingMonthResponse {
+//    Biling biling = 1;
+//    string error = 2;
+// }
+
+// message GetaccountRequest {
+//    string organization_id = 1;
+//    string customer_id = 2;
+// }
+
+// message GetaccountResponse {
+//    string default_card = 1;
+//    CardList card = 2;
+//    string error = 3;
+// }
+
+// message CreateSubscriptionRequest {
+//    string organization_id = 1;
+//    string customer_id = 2;
+//    Subscription subscription = 3;
+// }
+// message CreateSubscriptionResponse {
+//    Subscription subscription = 1;
+//    string error = 2;
+// }
+
+// message UpdateSubscriptionRequest {
+//    string organization_id = 1;
+//    string customer_id = 2; 
+//    string subscription_id = 3;
+    
+// }
+
+// message UpdateSubscriptionResponse {
+//    string status = 1;
+//    string error = 2;
+// }
+
+// message CreateProjectRequest {
+//    string organization_id = 1;
+//    string customer_id = 2;
+//    Project project = 3;
+// }
+
+// message CreateProjectResponse {
+//    string status = 1;
+//    string error = 2;
+// }
+
+// message CreateInvoiceRequest {
+//    string organization_id = 1;
+//    string invoice_id = 2;
+//    string year = 3;
+//    string month = 4;
+//    string project_id = 5;
+//    string status = 6;
+// }
+
+// message CreateInvoiceResponse {
+//    Customer customer = 1;
+//    string status = 2;
+// }
+
+// message CreateCardRequest {
+//    string organization_id = 1;
+//    Card card = 3;
+
+// }
+
+// message CreateCardResponse {
+//    string token_id =1;
+//    string status = 2;
+// }
+
+// message CancelSubscriptionRequest {
+//    string organization_id = 1;
+//    string subscription_id =2;    
+// }
+
+// message  CancelSubscriptionResponse {
+//    string status = 1;
+// }
+
+// message CreateCustomerRequest {
+//    string organization_id = 1;
+//    string name = 2;
+//   string email = 3;
+//    string customer_id = 4;
+// }
+
+// message CreateCustomerResponse {
+//    string customer_id =1;
+//    string error = 2;
+// }
+
+// message CreatePaymentRequest {
+//    string organization_id = 1;
+//    string customer_id = 2;
+//    Payment payment = 3;
+// }
+// message CreatePaymentResponse {
+//    string card_id =1;
+//    string status = 2;
+// }
+
+// message DeletePaymentRequest {
+//    string organization_id = 1;
+//    string card_id = 2;
+//    string customer_id = 3;
+// }
+
+// message DeletePaymentResponse {
+//    string status = 1;
+//    string error = 2;
+// }
+
+// message GetPaymentRequest {
+//    string organization_id = 1;
+//    string card_id = 2;
+//    string customer_id = 3;
+// }
+
+// message GetPaymentResponse {
+//    Payment payment = 1;
+//    string error = 2;
+// }
+
+// message ListPaymentRequest {
+//    string organization_id = 1;
+//    string customer_id = 2;
+// }
+
+// message ListPaymentResponse {
+//    PaymentList payment_list = 1;
+//    string error = 2;
+// }
+
+// message ListSubscriptionItemsRequest {
+//    string organization_id = 1;
+//    string subscription_id = 2;
+// }
+
+// message ListSubscriptionItemsResponse {
+//    Customer customer = 1;
+//    SubscriptionItemsList subscription_items_list = 2;
+//    string status = 3;
+// }
+
+// message ListProjectsRequest {
+//    string organization_id = 1;
+// }
+
+// message ListProjectsResponse {
+//    string customer_id = 1;
+//    repeated Project projects= 2;
+//    string status = 3;
+// }
+// message GetProjectRequest {
+//    string organization_id = 1;
+//    string project_id = 2;
+// }
+
+// message GetProjectResponse {
+//    Project project = 1;
+//    string status = 2;
+// }
+
+// message DeleteProjectRequest {
+//    string organization_id = 1;
+//    string project_id = 2;
+// }
+
+
+// message DeleteProjectResponse {
+//    string status = 1;
+//    string error = 2;
+// }
+
+// message SetDefaultPaymentMethodRequest {
+//    string organization_id = 1;
+//    string customer_id = 2;
+//    string card_id = 3;
+// }
+
+// message SetDefaultPaymentMethodResponse {
+//    string status = 1;
+//    string error = 2;
+// }
+
+// message ConsumeByProjectRequest{
+//    string organization_id = 1;
+//    string year = 2;
+//    string month = 3;
+// }
+
+// message ConsumeByProjectResponse{
+//    ProjectBillingList project_billing_list = 1;
+//    string error = 2;
+// }
+
+// message BlockChainSubscriptionRequest{
+//    string organization_id = 1;
+//    string customer_id = 2;
+//    BlockChain blockchain = 3;
+// }
+
+// message BlockChainSubscriptionResponse{
+//    string status = 1;
+//    string error = 2;
+// }
+
+// message ListCustomersRequest {
+//    string empty = 1;
+// }
+
+// message ListCustomersResponse {
+//    repeated Customer customers = 1;
+//    string error = 2;
+// }
+
+// message UpdateProjectRequest {
+//    string organization_id = 1;
+//    Project project = 2;
+// }
+
+// message UpdateProjectResponse {
+//    string status = 1;
+//    string error = 2;
+// }
