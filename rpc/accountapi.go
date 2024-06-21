@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"net/http"
 	"os"
 
 	model "github.com/groupargit/casacoloraccount-grpc/model/mongo/nocache"
@@ -75,10 +76,30 @@ func startRESTServer(ctx *svc.ServiceContext) {
 	server := rest.MustNewServer(c.RestConf)
 	defer server.Stop()
 
+	// Middleware para habilitar CORS
+	server.Use(corsMiddleware())
+
 	handler.RegisterHandlers(server, ctx)
 
 	bylogger.LogInfo(constants.START_SERVER, c.Host, c.Port)
 	server.Start()
+}
+
+func corsMiddleware() rest.Middleware {
+	return func(next http.HandlerFunc) http.HandlerFunc {
+		return func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+			if r.Method == http.MethodOptions {
+				w.WriteHeader(http.StatusOK)
+				return
+			}
+
+			next(w, r)
+		}
+	}
 }
 
 // Function to load service configuration
