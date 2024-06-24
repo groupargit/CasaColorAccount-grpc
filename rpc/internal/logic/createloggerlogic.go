@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/groupargit/casacoloraccount-grpc/rpc/internal/svc"
-	"github.com/groupargit/casacoloraccount-grpc/rpc/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,8 +23,15 @@ func NewCreateLoggerLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Crea
 	}
 }
 
-func (l *CreateLoggerLogic) CreateLogger(req *types.Request) error {
+func (l *CreateLoggerLogic) CreateLogger(req []byte) error {
 	fmt.Println("CreateLoggerLogic")
-	fmt.Println("req===:", req)
+	fmt.Println("req===:", string(req))
+
+	//push data in folder storagelog
+	createLogger := l.svcCtx.DB.CreateLogger(l.ctx, req)
+	if createLogger != nil {
+		return createLogger
+	}
+
 	return nil
 }

@@ -23,3 +23,5 @@ func NewAccountModel(url, db, collection string) AccountModel {
 		defaultAccountModel: newDefaultAccountModel(conn),
 	}
 }
+
+

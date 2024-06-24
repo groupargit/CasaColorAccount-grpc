@@ -3,16 +3,22 @@ package model
 import (
 	"context"
 	"fmt"
+	"time"
 
+	"github.com/groupargit/casacoloraccount-grpc/rpc/pkg/bylogger"
 	v1alpha1 "github.com/groupargit/casacoloraccount-grpc/rpc/types/account/v1alpha1"
 	"github.com/zeromicro/go-zero/core/stores/mon"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type accountModel interface {
 	LoginUser(ctx context.Context, data *v1alpha1.AccountLoginRequest) (*v1alpha1.AccountLoginResponse, error)
+	CreateLogger(ctx context.Context, data []byte) error
 	// InsertCustomer(ctx context.Context, data *v1alpha1.AccountLoginRequest) (*v1alpha1.AccountLoginResponse, error)
 	// FindOne(ctx context.Context, id string) (*Customer, error)
 	// FindByPod(ctx context.Context, name string) ([]*Customer, error)
@@ -179,4 +185,44 @@ func (m *defaultAccountModel) FindOneByName(ctx context.Context, name string) (*
 	default:
 		return nil, err
 	}
+}
+
+func (m *defaultAccountModel) CreateLogger(ctx context.Context, data []byte) error {
+	bylogger.LogInfo("CreateLoggerData")
+	log_create := Logger{
+		ID:        primitive.NewObjectID(),
+		Email:     "test",
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
+	resultInsert, err := m.conn.InsertOne(ctx, log_create)
+	if err != nil {
+		bylogger.LogErr("error insert one", err)
+		return fmt.Errorf("error insert one")
+	}
+
+	if resultInsert.InsertedID == nil {
+		bylogger.LogErr("error insert one")
+		st := status.New(codes.InvalidArgument, "does not save customer")
+		detail := errdetails.ErrorInfo{
+			Reason: err.Error(),
+			Metadata: map[string]string{
+				"organizationid": "test",
+				"name":           "test",
+				"user Id":    "test",
+			},
+		}
+
+		st, err = st.WithDetails(&detail)
+		if err != nil {
+			bylogger.LogErr(err)
+			return status.Error(codes.Internal, "does not save customer")
+		}
+
+		return st.Err()
+	}
+	// response := &v1alpha1.CreateCustomerResponse{
+	// 	CustomerId: data.CustomerId,
+	// }
+	return nil
 }

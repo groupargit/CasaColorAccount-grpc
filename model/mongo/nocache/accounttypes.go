@@ -16,3 +16,10 @@ type User struct {
 	CreatedAt time.Time          `bson:"created_at"`
 	UpdatedAt time.Time          `bson:"updated_at"`
 }
+
+type Logger struct {
+	ID        primitive.ObjectID `bson:"_id,omitempty"`
+	Email     string             `bson:"email"`
+	CreatedAt time.Time          `bson:"created_at"`
+	UpdatedAt time.Time          `bson:"updated_at"`
+}
