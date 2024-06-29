@@ -53,7 +53,7 @@ func main() {
 func startGRPCServer(ctx *svc.ServiceContext) {
 	var g config.ConfigGrpc
 	g.Name = "account.rpc"
-	g.ListenOn = ":50050"
+	g.ListenOn = ":50051"
 	conf.MustLoad(*configFile, &g)
 
 	s := zrpc.MustNewServer(g.RpcServerConf, func(grpcServer *grpc.Server) {

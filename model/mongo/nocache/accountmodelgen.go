@@ -2,6 +2,7 @@ package model
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -189,9 +190,16 @@ func (m *defaultAccountModel) FindOneByName(ctx context.Context, name string) (*
 
 func (m *defaultAccountModel) CreateLogger(ctx context.Context, data []byte) error {
 	bylogger.LogInfo("CreateLoggerData")
+	//Unmarshal data
+	ma := map[string]interface{}{}
+	if err := json.Unmarshal(data, &ma); err != nil {
+		bylogger.LogErr("error unmarshal data", err)
+		return fmt.Errorf("error unmarshal data")
+	}
+	bylogger.LogInfo("CreateLoggerData", ma["email"].(string))
 	log_create := Logger{
 		ID:        primitive.NewObjectID(),
-		Email:     "test",
+		Email:     ma["email"].(string),
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
@@ -209,7 +217,7 @@ func (m *defaultAccountModel) CreateLogger(ctx context.Context, data []byte) err
 			Metadata: map[string]string{
 				"organizationid": "test",
 				"name":           "test",
-				"user Id":    "test",
+				"user Id":        "test",
 			},
 		}
 

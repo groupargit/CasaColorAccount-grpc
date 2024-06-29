@@ -1,7 +1,7 @@
 Name: account
 Host: 0.0.0.0
 Port: 8088
-ListenOn: :50050
+ListenOn: :50055
 # Etcd:
 #   Hosts:
 #   - 127.0.0.1:2379
